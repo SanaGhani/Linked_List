@@ -29,7 +29,13 @@
 	
 .text
 
-main:    
+main:  
+#allocate 8 bytes for memory 
+     li $v0,9
+     li $a0,8
+     syscall
+	 move $s2,$v0  
+	 
 #head node or sentinel node
     # la $s2,address
 	 
@@ -73,21 +79,25 @@ create_node:
      li $v0,9
      li $a0,8
      syscall
-	 
-     move $s1,$t0
-move $s2,$v0	
- sw $s1, ($s2)
+	
+     move $s1,$t0	
+     sw $s1, ($s2)
 	 addi $s2,$s2,4
-	 sw  $0, ($s2)
-     move $v0,$s2 
+	 #move $s2,$v0
+	 sw $0, ($s2)
 	 #addi $s2,$s2,4
+     move $v0,$s2 
+	 
+	 move $a0,$v0
+	 li $v0,1
+	 syscall
 	 jr $ra
 	
 #end                                                                                                                                                              of create_node 
 
 #add a new node:
      
-add_node:
+    add_node:
      li $v0,4
      la $a0,prompt1
      syscall

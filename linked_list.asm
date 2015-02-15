@@ -21,14 +21,14 @@
 ##      $t0 - store the int data for node creation
 ##		$t1 - store the address where the node is created
 
-.data
-    address: .word ?
-	prompt:  .asciiz"Do you want to enter more data?\t\n"
-	prompt1: .asciiz"Enter the data you want to add in the list:\t\n "
-    prompt2: .asciiz"Press 1 for exit\n"
-	linefeed:.asciiz"\n"
+    .data
+         address: .word ?
+	     prompt:  .asciiz"Do you want to enter more data?\t\n"
+       	 prompt1: .asciiz"Enter the data you want to add in the list:\t\n "
+         prompt2: .asciiz"Press 1 for exit\n"
+         linefeed:.asciiz"\n"
 	
-.text
+    .text
 
 main:    
 #head node or sentinel node
@@ -72,7 +72,10 @@ create_node:
      li $v0,9
      li $a0,8
      syscall
-	 
+     
+     addi $a0,$v0,0
+     li $v0,1
+     syscall	 
      move $s1,$t0
 	 sw $s1, ($s2)
 	 addi $s2,$s2,4
