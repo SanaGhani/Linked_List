@@ -22,25 +22,43 @@
 ##		$t1 - store the address where the node is created
 
 .data
-    address: .word 10
+    address: .word ?
+	prompt:  .asciiz"Do you want to enter more data?\t\n"
+	prompt1: .asciiz"Enter the data you want to add in the list:\t\n "
+    prompt2: .asciiz"Press 1 for exit\n"
+	linefeed:.asciiz"\n"
 	
 .text
 
 main:    
 #head node or sentinel node
-     la $s2,address    
-	 li $s0,0     #sentinel value
-     move $a0,$s0
+     la $s2,address
+	 
+	 li $v0,1
+	 move $a0,$s2
+	 syscall
+	 
+     #add $s4,$s2,$0	 
+	 #li $s0,0     #sentinel value
+     #move $a0,$s0
 	 
 
-     jal create_node #jump to create a node 
-     move $t1,$v0    #result of create node in t1
-
+     #jal create_node #jump to create a node
+	 addi $t4,$0,0
+	 addi $t5,$0,4
+loop:
+     jal add_node	 
+     move $t1,$v0   #result of create node in t1
+     addi $t4,$t4,1
+	 bne $t4,$t5,loop
+	 
+	 
 #print sentinel node	      
      li $v0,1
-     move $a0,$t1
-     syscall
-
+     lw $a0,0($t1)
+	 syscall
+	
+	 
 #exit
      li $v0,10
      syscall
@@ -50,18 +68,36 @@ main:
 create_node:
      add $t0,$a0,$0
      
-#allocate memory 
+#allocate 8 bytes for memory 
      li $v0,9
      li $a0,8
      syscall
-
+	 
      move $s1,$t0
-     sw $s1,0($s2)
-     sw $0,4($s2)
-     move $v0,$s2
-     jr $ra
-#end of create_node 
+	 sw $s1, ($s2)
+	 addi $s2,$s2,4
+	 sw  $0, ($s2)
+     move $v0,$s2 
+	 #addi $s2,$s2,4
+	 jr $ra
+	
+#end                                                                                                                                                              of create_node 
 
+#add a new node:
+     
+add_node:
+     li $v0,4
+     la $a0,prompt1
+     syscall
 
+     add $t2,$ra,$0
+     li $v0,5
+     syscall
 
+     move $a0,$v0
+	 jal create_node
+	 
+     move $t1,$v0
+     jr $t2
+	 
 
