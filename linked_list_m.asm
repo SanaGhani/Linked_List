@@ -77,9 +77,11 @@ create_node:
      move $s1,$t0
 move $s2,$v0	
  sw $s1, ($s2)
-	 addi $s2,$s2,4
-	 sw  $0, ($s2)
-     move $v0,$s2 
+	 #addi $s2,$s2,4
+	addi $s3,$s2,4 
+	#sw  $0, ($s2)
+	sw $s3,4($s2)     	
+move $v0,$s2 
 	 #addi $s2,$s2,4
 	 jr $ra
 	
