@@ -22,16 +22,39 @@
 ##		$t1 - store the address where the node is created
 
 .data
+<<<<<<< HEAD
+    prompt:  .asciiz"Do you want to enter more data?\t\n"
+	prompt1: .asciiz"Enter the data you want to add in the list:\t\n "
+    prompt2: .asciiz"Press 1 for exit\n"
+=======
     	greet: .asciiz "\t\t Implementing Linked List in MIPS Assembly Language\n\n"
 	prompt:  .asciiz"Do you want to enter more data?\t\n"
 	prompt1: .asciiz"Enter the data you want to add in the list:\t\n "
     	prompt2: .asciiz"Press 1 for exit\n"
 	list: .asciiz "\nList of integers:\t\n"
+>>>>>>> 14bd6242d6a1158383040f17006747970127b16e
 	linefeed:.asciiz"\n"
 	
 .text
 
 main:    
+<<<<<<< HEAD
+#mem allocation for 1st integer
+	 li $v0,9
+	 li $a0,4
+	 syscall
+	 move $t3,$v0
+	 
+	 move $a0,$t3
+	 li $v0,1
+	 syscall
+	 
+	 li $v0,4
+     la $a0,linefeed
+     syscall
+	 
+
+=======
 li $v0,9
      li $a0,8
      syscall
@@ -42,6 +65,7 @@ li $v0,4
 
 	
      #jal create_node #jump to create a node
+>>>>>>> 14bd6242d6a1158383040f17006747970127b16e
 	 addi $t4,$0,0 # initializing counter i=0;
 	 addi $t5,$0,4 #size of loop
 loop:
@@ -79,12 +103,21 @@ create_node:
      add $t0,$a0,$0
 #allocate 8 bytes for node 
      li $v0,9
-     li $a0,8
+     li $a0,4
      syscall
      move $s2,$v0
 	#jal save_headaddress
 	 
+	 
      move $s1,$t0
+<<<<<<< HEAD
+     move $s2,$v0	
+     sw $s1, ($t3)
+	 sw $0,($s2) 	 
+	 move $t3,$s2	 
+     move $v0,$s2 
+
+=======
 
  sw $s1, ($s2)
 	 #addi $s2,$s2,4
@@ -93,6 +126,7 @@ create_node:
 	sw $s3,4($s2)     	
 move $v0,$s2 
 	 #addi $s2,$s2,4
+>>>>>>> 14bd6242d6a1158383040f17006747970127b16e
 	 jr $ra
 
 #save_headaddress
@@ -108,7 +142,7 @@ add_node:
 
      add $t2,$ra,$0
      li $v0,5
-     syscall
+     syscall #Take Input
 
      move $a0,$v0
 	 jal create_node
